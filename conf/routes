@@ -4,8 +4,28 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET  /            controllers.HomeController.index
-GET  /test        controllers.HomeController.test
+GET                /                             controllers.HomeController.index()
+GET                /test                         controllers.HomeController.test()
+
+# Routes for customers
+GET                /customers                    controllers.CustomersDAO.getCustomers
+POST               /customers                    controllers.CustomersDAO.addCustomer(fullName: String, email: String, phone: String)
+DELETE             /customers                    controllers.CustomersDAO.deleteCustomer(customerId: String)
+
+# Routes for orders
+GET                /orders                       controllers.OrdersDAO.getOrders()
+POST               /orders                       controllers.OrdersDAO.addOrder(customerId: String, orderStatus: String)
+DELETE             /orders                       controllers.OrdersDAO.deleteOrder(orderId: Int)
+
+# Routes for ordered items
+GET                /ordered-items                controllers.OrderedItemsDAO.getOrderedItems()
+POST               /ordered-items                controllers.OrderedItemsDAO.addOrderedItem(orderId: Int, itemQty: Int, productId: String)
+DELETE             /ordered-items                controllers.OrderedItemsDAO.deleteOrderedItem(itemId: String)
+
+# Routes for products
+GET                /products                     controllers.ProductsDAO.getProducts()
+POST               /products                     controllers.ProductsDAO.addProduct(productName: String, quantity: Int, price: Double)
+DELETE             /products                     controllers.ProductsDAO.deleteProduct(productId: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET                /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
