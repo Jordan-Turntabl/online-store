@@ -22,12 +22,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   val testInt = 5
 
 
-  def index() = Action {
+  def index(): Action[AnyContent] = Action {
     implicit request: Request[AnyContent] =>
       Ok(views.html.index())
   }
 
-  def test() = Action {
+  def test(): Action[AnyContent] = Action {
     implicit request: Request[AnyContent] =>
       Ok("Test passed!!")
   }
