@@ -14,9 +14,9 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, Future}
 
 @Singleton
-class CustomersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)
-                            (implicit ec: ExecutionContext)
-  extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
+class CustomersController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, controllerComponents: ControllerComponents)
+                                   (implicit ec: ExecutionContext)
+  extends AbstractController(controllerComponents) with HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.profile.api._
 

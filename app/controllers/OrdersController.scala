@@ -1,6 +1,5 @@
 package controllers
 
-import helpers.OrderStatus
 import models.Tables.{Order, OrderTable, Orders}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.libs.json.{Json, OFormat, Reads, Writes}
@@ -15,9 +14,9 @@ import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 
 @Singleton
-class OrdersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)
-                         (implicit ec: ExecutionContext)
-  extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
+class OrdersController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, controllerComponents: ControllerComponents)
+                                (implicit ec: ExecutionContext)
+  extends AbstractController(controllerComponents) with HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.profile.api._
 
@@ -25,11 +24,6 @@ class OrdersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
   implicit val timestampWrites: Writes[Timestamp] = implicitly[Writes[String]].contramap(_.getTime.toString)
 
   implicit val orderFormat: OFormat[Order] = Json.format[Order]
-
-  import OrderStatus._
-
-  implicit val userRoleMapper =
-    MappedColumnType.base[OrderStatus, String](_.toString, OrderStatus.withName)
 
   def getOrders: Action[AnyContent] = Action {
     val query = TableQuery[OrderTable]

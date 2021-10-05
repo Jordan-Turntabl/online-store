@@ -11,9 +11,9 @@ import javax.inject.Inject
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-class OrderedItemsDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)
-                               (implicit ec: ExecutionContext)
-  extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
+class OrderedItemsController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, controllerComponents: ControllerComponents)
+                                      (implicit ec: ExecutionContext)
+  extends AbstractController(controllerComponents) with HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.profile.api._
 
